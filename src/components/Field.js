@@ -1,19 +1,15 @@
-import React from 'react';
+import React, { Children } from 'react';
 import PropTypes from 'prop-types';
-import { css } from 'emotion';
-import Title from './Title';
+import Cell from './Cell';
 
-class Field extends React.Component {
-    static propTypes = {
-        size: PropTypes.number
-    };
+class Field extends React.PureComponent {
     render() {
+        const rcount = Math.ceil(Math.sqrt(Children.count(this.props.children)));
         return (
-            <section className={css`
-                margin: 10px auto;
-                background-color: wheat;
-            `}>
-                <Title>test title</Title>
+            <section>
+                {Children.map(this.props.children, (item, idx) => (
+                    <Cell isFirst={idx % rcount === 0}>{item}</Cell>
+                ))}
             </section>
         );
     }
