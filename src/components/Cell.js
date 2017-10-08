@@ -5,6 +5,6 @@ export default styled('div')`
   float: left;
   ${p => p.isFirst ? 'clear: left;' : ''}
   text-align: center;
-  margin: 0.5em;
+  margin: 3px;
   padding: 0;
 `;
