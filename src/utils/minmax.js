@@ -23,10 +23,42 @@ export const getPossibleMoves = (board) => {
 export const getScoreFunc = (winCount, type) => {
     const basicScore = (board, player) => {
         /**
-         * sums up all unlocked chains of player's tockens
-         * a longer chain gives extra score
-         * e.g. 1 tocken - 1sc, 2 tockens - ...
-          */
+         * 100 * average cluster size / number of clusters
+         * eq to sum of tockens in clusters / number of clusters^2
+         */
+        const gb = arrayToMatrix(board);
+
     };
     return basicScore;
+};
+
+/**
+ * 
+ */
+export const minmax = (board, depth, isMaxPlayer) => {
+    //     if depth = 0 or board is a terminal board
+    //         return the heuristic value of board
+    //     if isMaxPlayer
+    //         bestValue := −∞
+    //         for each child of board
+    //             v := minimax(child, depth − 1, false)
+    //             bestValue := max(bestValue, v)
+    //         return bestValue
+    //     else    (* minimizing player *)
+    //         bestValue := +∞
+    //         for each child of board
+    //             v := minimax(child, depth − 1, true)
+    //             bestValue := min(bestValue, v)
+    //         return bestValue    
+};
+
+export const arrayToMatrix = array => {
+    const size = Math.sqrt(array.length);
+    let r = 0, c = 0, i = size;
+    return array.reduce((acc, value) => {
+        if (c === 0) { acc.push([]) }
+        acc[r].push({ value });
+        if (++c === size) { r++; c = 0 }
+        return acc;
+    }, []);
 };
