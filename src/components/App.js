@@ -4,22 +4,22 @@ import Title from './Title';
 import Board from './Board';
 import { Base, Player1, Player2 } from './elements';
 import * as states from '../utils/cellStates';
+import Brain from './Brain';
 
 class App extends React.Component {
     constructor(props) {
         super(props);
 
-        const initialSize = 5;
+        const initialSize = 3;
         this.state = {
             board: new Array(initialSize * initialSize).fill(states.FREE),
             size: initialSize,
             active: states.PLAYER1,
-            moves: [],
+            aiPlayer: states.PLAYER1
         };
     }
 
-    recordMove = e => {
-        const idx = e.currentTarget.dataset['index'];
+    recordMove = idx => {
         const board = this.state.board;
         if (board[idx] !== states.FREE) return;
 
@@ -32,22 +32,28 @@ class App extends React.Component {
         });
     };
 
+    handleCellClick = e => {
+        this.recordMove(e.currentTarget.dataset['index']);
+    };
+
     render() {
+        const { board, active, aiPlayer } = this.state;
         return (
-            <section className={css`
-                text-align: center;
-            `}>
+            <section className={css`text-align: center;`}>
                 <Title>test title</Title>
                 <Board>
-                    {this.state.board.map((cell, idx) => React.createElement(
+                    {board.map((cell, idx) => React.createElement(
                         cells[cell],
                         {
                             key: idx,
                             'data-index': idx,
-                            onClick: this.recordMove
+                            onClick: this.handleCellClick
                         })
                     )}
                 </Board>
+                { aiPlayer
+                    ? <Brain {...{ board, active, aiPlayer }} onMove={this.recordMove} />
+                    : null }
             </section>
         );
     }

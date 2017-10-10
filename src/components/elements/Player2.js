@@ -1,7 +1,7 @@
 import React from 'react';
 import Base from './Base';
 
-const Player2 = ({ ...props }) => {
+const Player2 = (...props) => {
     return (
         <Base {...props}>0</Base>
     );
