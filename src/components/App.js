@@ -3,7 +3,7 @@ import { css } from 'emotion';
 import Title from './Title';
 import Board from './Board';
 import { Base, Player1, Player2 } from './elements';
-import * as states from '../utils/cellStates';
+import * as states from '../constants/cellStates';
 import Brain from './Brain';
 
 class App extends React.Component {

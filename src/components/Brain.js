@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getPossibleMoves, getScoreFunc } from '../utils/minmax';
+import { getPossibleMoves, getScoreFunc } from '../minmax';
 
 class Brain extends React.Component {
     static propTypes = {

@@ -1,7 +1,7 @@
 import React, { Children } from 'react';
 import { css } from 'emotion';
 import Cell from './Cell';
-import { clearfix } from '../utils/styleBase';
+import { clearfix } from '../style/styleBase';
 
 const style = css`
     display: inline-block;
