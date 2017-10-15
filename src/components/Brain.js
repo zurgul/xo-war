@@ -12,11 +12,7 @@ class Brain extends React.Component {
 
     calcScore = getScoreFunc(3);
 
-    componentDidMount() { this.componentWillReceiveProps(this.props) }
-
-    componentWillReceiveProps({ board, active, aiPlayer, onMove }) {
-        if (active !== aiPlayer) return null;
-
+    calcMove = (board, aiPlayer) => {
         const moves = getPossibleMoves(board);
         const boards = moves.map(idx => {
             const newBoard = [...board];
@@ -29,7 +25,14 @@ class Brain extends React.Component {
             (max, score, idx) => max.score < score ? { score, idx } : max,
             { score: -100, idx: undefined });
 
-        onMove(moves[max.idx]);
+        return moves[max.idx];
+    };
+
+    componentDidMount() { this.componentWillReceiveProps(this.props) }
+
+    componentWillReceiveProps({ board, active, aiPlayer, onMove }) {
+        if (active !== aiPlayer) { return null }
+        onMove(this.calcMove(board, aiPlayer));
     }
 
     shouldComponentUpdate() { return false }

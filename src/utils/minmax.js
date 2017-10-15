@@ -30,17 +30,18 @@ export const getScoreFunc = (winCount, type) => {
         let top, left, topleft, neighbor;
         let groupId = 0;
         const groupSize = [];
+        const emptyNeighbor = { value: 1 };
 
         for (let r = 0; r < gb.length; r++) {
             for (let c = 0; c < gb.length; c++) {
                 if (gb[r][c].value !== player) { continue }
 
-                top = r > 0 ? gb[r - 1][c] : undefined;
-                left = c > 0 ? gb[r][c - 1] : undefined;
-                topleft = r > 0 && c > 0 ? gb[r - 1][c - 1] : undefined;
+                top = r > 0 ? gb[r - 1][c] : {};
+                left = c > 0 ? gb[r][c - 1] : emptyNeighbor;
+                topleft = r > 0 && c > 0 ? gb[r - 1][c - 1] : emptyNeighbor;
                 neighbor = left || top || topleft;
 
-                if (neighbor) {
+                if (neighbor.value === player) {
                     gb[r][c].groupId = neighbor.groupId;
                     groupSize[neighbor.groupId]++;
                 }
