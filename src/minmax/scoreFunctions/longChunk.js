@@ -1,3 +1,5 @@
+import { arrayToMatrix } from '../index';
+
 const emptyNeighbor = { value: 1 };
 
 export default function (board, player, winCount) {
@@ -19,4 +21,4 @@ export default function (board, player, winCount) {
         }
     }
     return null;
-};
+}

@@ -1,2 +1,2 @@
-export naive from './naive';
-export longChunk from './longChunk';
+export { default as naive } from './naive';
+export { default as longChunk } from './longChunk';

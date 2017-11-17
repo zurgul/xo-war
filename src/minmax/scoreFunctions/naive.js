@@ -30,4 +30,4 @@ export default function (board, player) {
         }
     }
     return groupSize.reduce((s, v) => (s + v), 0) / (groupSize.length * groupSize.length);
-};
+}
