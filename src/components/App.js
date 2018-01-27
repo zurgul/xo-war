@@ -3,8 +3,9 @@ import { css } from 'emotion';
 import Title from './Title';
 import Board from './Board';
 import { Base, Player1, Player2 } from './elements';
-import * as states from '../constants/cellStates';
+import * as state from '../constants/cellStates';
 import Brain from './Brain';
+import { getOpponent } from '../minmax';
 
 class App extends React.Component {
     constructor(props) {
@@ -12,23 +13,23 @@ class App extends React.Component {
 
         const initialSize = 3;
         this.state = {
-            board: new Array(initialSize * initialSize).fill(states.FREE),
+            board: new Array(initialSize * initialSize).fill(state.FREE),
             size: initialSize,
-            active: states.PLAYER1,
-            aiPlayer: states.PLAYER1
+            active: state.PLAYER1,
+            aiPlayer: state.PLAYER1
         };
     }
 
     recordMove = idx => {
-        const board = this.state.board;
-        if (board[idx] !== states.FREE) return;
+        const { board, active } = this.state;
+        if (board[idx] !== state.FREE) return;
 
-        const nextBoard = [...this.state.board];
-        nextBoard[idx] = this.state.active;
+        const nextBoard = [...board];
+        nextBoard[idx] = active;
 
         this.setState({
             board: nextBoard,
-            active: this.state.active === states.PLAYER1 ? states.PLAYER2 : states.PLAYER1
+            active: getOpponent(active)
         });
     };
 
@@ -60,9 +61,9 @@ class App extends React.Component {
 }
 
 const cells = {
-    [states.FREE]: Base,
-    [states.PLAYER1]: Player1,
-    [states.PLAYER2]: Player2,
+    [state.FREE]: Base,
+    [state.PLAYER1]: Player1,
+    [state.PLAYER2]: Player2,
 };
 
 export default App;

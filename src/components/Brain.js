@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getPossibleMoves, getScoreFunc } from '../minmax';
+import { getPossibleMoves, getScoreFunc, getMinMax } from '../minmax';
 
 class Brain extends React.Component {
     static propTypes = {
@@ -10,7 +10,7 @@ class Brain extends React.Component {
         onMove: PropTypes.func.isRequired
     };
 
-    calcScore = getScoreFunc(3);
+    scoreFn = getScoreFunc(3);
 
     calcMove = (board, aiPlayer) => {
         const moves = getPossibleMoves(board);
@@ -19,19 +19,18 @@ class Brain extends React.Component {
             newBoard[idx] = aiPlayer;
             return newBoard;
         });
-        const scores = boards.map(b => this.calcScore(b, aiPlayer));
 
-        const max = scores.reduce(
-            (max, score, idx) => max.score < score ? { score, idx } : max,
-            { score: -100, idx: undefined });
+        const scores = boards.map(b => this.minmax(b, 2, false));
+        const max = Math.max(...scores);
 
-        return moves[max.idx];
+        return moves[max ? scores.indexOf(max) : 0];
     };
 
     componentDidMount() { this.componentWillReceiveProps(this.props) }
 
     componentWillReceiveProps({ board, active, aiPlayer, onMove }) {
         if (active !== aiPlayer) { return null }
+        this.minmax = getMinMax(this.scoreFn, aiPlayer);
         onMove(this.calcMove(board, aiPlayer));
     }
 

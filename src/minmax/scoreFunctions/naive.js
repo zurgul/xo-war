@@ -1,3 +1,5 @@
+import { arrayToMatrix } from '../index';
+
 const emptyNeighbor = { value: 1 };
 
 export default function (board, player) {
@@ -14,16 +16,15 @@ export default function (board, player) {
         for (let c = 0; c < gb.length; c++) {
             if (gb[r][c].value !== player) { continue }
 
-            top = r > 0 ? gb[r - 1][c] : {};
+            top = r > 0 ? gb[r - 1][c] : emptyNeighbor;
             left = c > 0 ? gb[r][c - 1] : emptyNeighbor;
             topleft = r > 0 && c > 0 ? gb[r - 1][c - 1] : emptyNeighbor;
-            neighbor = left || top || topleft;
+            neighbor = top.value === player ? top : left.value === player ? left : topleft;
 
             if (neighbor.value === player) {
                 gb[r][c].groupId = neighbor.groupId;
                 groupSize[neighbor.groupId]++;
-            }
-            else {
+            } else {
                 groupSize.push(1);
                 gb[r][c].groupId = groupId++;
             }
