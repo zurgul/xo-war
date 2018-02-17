@@ -16,7 +16,7 @@ class App extends React.Component {
             board: new Array(initialSize * initialSize).fill(state.FREE),
             size: initialSize,
             active: state.PLAYER1,
-            aiPlayer: state.PLAYER1
+            aiPlayer: state.PLAYER2
         };
     }
 

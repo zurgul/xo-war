@@ -20,10 +20,13 @@ class Brain extends React.Component {
             return newBoard;
         });
 
-        const scores = boards.map(b => this.minmax(b, 2, false));
+        const scores = boards.map(b => this.minmax(b, 3, false));
         const max = Math.max(...scores);
 
-        return moves[max ? scores.indexOf(max) : 0];
+        // console.log(moves.join(', '));
+        // console.log(scores.join(', '));
+
+        return moves[scores.indexOf(max)];
     };
 
     componentDidMount() { this.componentWillReceiveProps(this.props) }
