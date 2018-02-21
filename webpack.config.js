@@ -1,8 +1,23 @@
 const path = require('path');
 const webpack = require('webpack');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin'); // NODE_ENV === 'production'
 
-const NODE_ENV = process.env.NODE_ENV || 'development';
+const NODE_ENV = process.env.NODE_ENV || 'dev';
+
+const plugins = [
+	new CleanWebpackPlugin(['build']),
+	new HtmlWebpackPlugin({
+		hash: true,
+		template: './src/index.html'
+	})
+];
+if (NODE_ENV === 'prod') { plugins.push(new UglifyJsPlugin()) } // { sourceMap: true }
+
+// new webpack.DefinePlugin({
+// 	'process.env.NODE_ENV': JSON.stringify(NODE_ENV)
+// })
 
 module.exports = {
 	target: 'web',
@@ -34,14 +49,7 @@ module.exports = {
 		]
 	},
 
-	plugins: [
-		new HtmlWebpackPlugin({
-			template: './src/index.html'
-		}),
-		new webpack.DefinePlugin({
-			'process.env.NODE_ENV': JSON.stringify(NODE_ENV)
-		})
-	],
+	plugins,
 
 	stats: {
 		colors: true,

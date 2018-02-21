@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --progress --colors",
-    "start": "webpack-dev-server --progress --colors",
+    "build": "NODE_ENV=prod webpack --progress --colors",
+    "start": "NODE_ENV=dev webpack-dev-server --progress --colors",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "AG",
@@ -28,6 +28,8 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
+    "clean-webpack-plugin": "^0.1.18",
+    "cross-env": "^5.1.3",
     "css-loader": "^0.28.9",
     "eslint": "^3.19.0",
     "eslint-config-react": "^1.1.7",
@@ -37,6 +39,7 @@
     "eslint-plugin-react": "^7.6.0",
     "html-webpack-plugin": "^2.29.0",
     "style-loader": "^0.18.2",
+    "uglifyjs-webpack-plugin": "^1.2.0",
     "webpack": "^3.10.0",
     "webpack-dev-server": "^2.11.1"
   }
