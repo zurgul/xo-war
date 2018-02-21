@@ -8,7 +8,7 @@ const style = css`
 `;
 
 const Board = ({ children, className = '' }) => {
-    const rowCount = Math.ceil(Math.sqrt(Children.count(children)));
+    const rowCount = Math.sqrt(Children.count(children)) << 0;
     return (
         <section className={`${style} ${className} ${clearfix}`}>
             {Children.map(children, (item, idx) => (

@@ -1,7 +1,6 @@
 import * as state from '../constants/cellStates';
 import * as scoreFn from './scoreFunctions';
 
-
 /**
  * Receive board state as an array and returns an array of unoccupied cells
  * @param board single dimension array with current board state
@@ -9,11 +8,9 @@ import * as scoreFn from './scoreFunctions';
  */
 export const getPossibleMoves = board => {
     const indexes = [];
-
     for (let i = board.length; i--;) {
         if (board[i] === state.FREE) { indexes.push(i) }
     }
-
     return indexes;
 };
 
@@ -27,15 +24,13 @@ export const getScoreFunc = (winCount, type = 'longChunk') => scoreFn[type];
 
 export const getOpponent = player => player === state.PLAYER1 ? state.PLAYER2 : state.PLAYER1;
 
-/**
- * 
- */
 export const getMinMax = (scoreFn, aiPlayer) => {
     const minmax = (board, depth, isMaxPlayer) => {
         const moves = getPossibleMoves(board);
 
-        if (depth === 0 || moves.length < 2) {
-            return scoreFn(board, aiPlayer);
+        const score = scoreFn(board, aiPlayer);
+        if (score === scoreFn.WIN || depth === 0 || moves.length < 2) {
+            return score;
         }
 
         const boards = moves.map(idx => {

@@ -10,8 +10,6 @@ class Brain extends React.Component {
         onMove: PropTypes.func.isRequired
     };
 
-    scoreFn = getScoreFunc(3);
-
     calcMove = (board, aiPlayer) => {
         const moves = getPossibleMoves(board);
         const boards = moves.map(idx => {
@@ -20,20 +18,20 @@ class Brain extends React.Component {
             return newBoard;
         });
 
-        const scores = boards.map(b => this.minmax(b, 3, false));
+        const scores = boards.map(b => this.minmax(b, 2, false));
         const max = Math.max(...scores);
-
-        // console.log(moves.join(', '));
-        // console.log(scores.join(', '));
 
         return moves[scores.indexOf(max)];
     };
 
-    componentDidMount() { this.componentWillReceiveProps(this.props) }
+    componentDidMount() { 
+        this.scoreFn = getScoreFunc(Math.sqrt(this.props.board.length) >> 0);
+        this.minmax = getMinMax(this.scoreFn, this.props.aiPlayer);
+        this.componentWillReceiveProps(this.props)
+    }
 
     componentWillReceiveProps({ board, active, aiPlayer, onMove }) {
         if (active !== aiPlayer) { return null }
-        this.minmax = getMinMax(this.scoreFn, aiPlayer);
         onMove(this.calcMove(board, aiPlayer));
     }
 

@@ -2,7 +2,9 @@ import { arrayToMatrix } from '../index';
 
 const emptyNeighbor = { value: 1 };
 
-export default function (board, player) {
+const WIN = 100;
+
+function scoreFn(board, player) {
     /**
      * 100 * average cluster size / number of clusters
      * eq to sum of tockens in clusters / number of clusters^2
@@ -32,3 +34,7 @@ export default function (board, player) {
     }
     return groupSize.reduce((s, v) => (s + v), 0) / (groupSize.length * groupSize.length);
 }
+
+scoreFn.WIN = WIN;
+
+export default scoreFn;
