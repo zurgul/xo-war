@@ -53,7 +53,7 @@ class App extends React.Component {
         const { board, active, aiPlayer, winner } = this.state;
         return (
             <section className={css`text-align: center;`}>
-                <Title>{winner ? (winner === active ? 'You won' : 'You lost') : 'Game time'}</Title>
+                <Title>{winner ? (winner === aiPlayer ? 'You lost' : 'You won') : 'Game time'}</Title>
                 <Board>
                     {board.map((cell, idx) => React.createElement(
                         cells[cell],
