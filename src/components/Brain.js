@@ -7,7 +7,8 @@ class Brain extends React.Component {
         board: PropTypes.array.isRequired,
         active: PropTypes.number.isRequired,
         aiPlayer: PropTypes.number.isRequired,
-        onMove: PropTypes.func.isRequired
+        onMove: PropTypes.func.isRequired,
+        scoreFn: PropTypes.func.isRequired
     };
 
     calcMove = (board, aiPlayer) => {
@@ -19,14 +20,15 @@ class Brain extends React.Component {
         });
 
         const scores = boards.map(b => this.minmax(b, 2, false));
+        // console.log('moves: ' + moves.toString());
+        // console.log('score: ' + scores.toString());
         const max = Math.max(...scores);
 
         return moves[scores.indexOf(max)];
     };
 
     componentDidMount() { 
-        this.scoreFn = getScoreFunc(Math.sqrt(this.props.board.length) >> 0);
-        this.minmax = getMinMax(this.scoreFn, this.props.aiPlayer);
+        this.minmax = getMinMax(this.props.scoreFn, this.props.aiPlayer);
         this.componentWillReceiveProps(this.props)
     }
 

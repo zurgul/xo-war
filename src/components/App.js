@@ -7,16 +7,17 @@ import * as state from '../constants/cellStates';
 import Brain from './Brain';
 import { getOpponent, getScoreFunc } from '../minmax';
 
+const BOARD_SIZE = 7;
+const WIN_COUNT = 5;
+
 class App extends React.Component {
     constructor(props) {
         super(props);
 
-        const initialSize = 3;
-        this.scoreFn = getScoreFunc(initialSize);
+        this.scoreFn = getScoreFunc(WIN_COUNT, BOARD_SIZE); // winCount
 
         this.state = {
-            board: new Array(initialSize * initialSize).fill(state.FREE),
-            size: initialSize,
+            board: new Array(BOARD_SIZE * BOARD_SIZE).fill(state.FREE),
             active: state.PLAYER1,
             aiPlayer: state.PLAYER2,
             winner: undefined
@@ -24,7 +25,7 @@ class App extends React.Component {
     }
 
     recordMove = idx => {
-        const { board, active, size, winner } = this.state;
+        const { board, active, winner } = this.state;
         if (board[idx] !== state.FREE || winner) return;
 
         const nextBoard = [...board];
@@ -33,7 +34,7 @@ class App extends React.Component {
         let nextActive = getOpponent(active);
         let nextWinner;
 
-        if (this.scoreFn(nextBoard, active, size) === this.scoreFn.WIN) {
+        if (this.scoreFn(nextBoard, active) >= this.scoreFn.WIN) {
             nextWinner = active;
             nextActive = active + nextActive; // to turn off 'brain'
         }
@@ -65,7 +66,7 @@ class App extends React.Component {
                     )}
                 </Board>
                 { aiPlayer
-                    ? <Brain {...{ board, active, aiPlayer }} onMove={this.recordMove} />
+                    ? <Brain {...{ board, active, aiPlayer }} onMove={this.recordMove} scoreFn={this.scoreFn} />
                     : null }
             </section>
         );

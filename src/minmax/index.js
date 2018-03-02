@@ -20,22 +20,23 @@ export const getPossibleMoves = board => {
  * @param type - name of score function if more than one available
  * @return {function(board, player, [winCount])} score function
  */
-export const getScoreFunc = (winCount, type = 'longChunk') => scoreFn[type];
+export const getScoreFunc = (winCount, sideLength, type = 'naive') => scoreFn[type](winCount, sideLength);
 
 export const getOpponent = player => player === state.PLAYER1 ? state.PLAYER2 : state.PLAYER1;
 
 export const getMinMax = (scoreFn, aiPlayer) => {
+    const opponent = getOpponent(aiPlayer);
     const minmax = (board, depth, isMaxPlayer) => {
         const moves = getPossibleMoves(board);
 
         const score = scoreFn(board, aiPlayer);
-        if (score === scoreFn.WIN || depth === 0 || moves.length < 2) {
+        if (score >= scoreFn.WIN || depth === 0 || moves.length < 2) {
             return score;
         }
 
         const boards = moves.map(idx => {
             const newBoard = [...board];
-            newBoard[idx] = isMaxPlayer ? aiPlayer : getOpponent(aiPlayer);
+            newBoard[idx] = isMaxPlayer ? aiPlayer : opponent;
             return newBoard;
         });
 
