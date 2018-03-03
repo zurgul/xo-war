@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getPossibleMoves, getScoreFunc, getMinMax } from '../minmax';
+import { getPossibleMoves, getMinMax } from '../minmax';
 
 class Brain extends React.Component {
     static propTypes = {
@@ -20,8 +20,6 @@ class Brain extends React.Component {
         });
 
         const scores = boards.map(b => this.minmax(b, 2, false));
-        // console.log('moves: ' + moves.toString());
-        // console.log('score: ' + scores.toString());
         const max = Math.max(...scores);
 
         return moves[scores.indexOf(max)];
