@@ -1,5 +1,5 @@
 const path = require('path');
-const webpack = require('webpack');
+// const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin'); // NODE_ENV === 'production'
@@ -24,7 +24,7 @@ module.exports = {
 
 	devtool: 'source-map',
 	mode: 'development',
-	
+
 	entry: [
 		'babel-polyfill',
 		'./src/index'
