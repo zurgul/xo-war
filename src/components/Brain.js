@@ -7,11 +7,12 @@ class Brain extends React.Component {
         board: PropTypes.array.isRequired,
         active: PropTypes.number.isRequired,
         aiPlayer: PropTypes.number.isRequired,
+        depth: PropTypes.number.isRequired,
         onMove: PropTypes.func.isRequired,
         scoreFn: PropTypes.func.isRequired
     };
 
-    calcMove = (board, aiPlayer) => {
+    calcMove = (board, aiPlayer, depth) => {
         const moves = getPossibleMoves(board);
         const boards = moves.map(idx => {
             const newBoard = [...board];
@@ -19,7 +20,7 @@ class Brain extends React.Component {
             return newBoard;
         });
 
-        const scores = boards.map(b => this.minmax(b, 2, false));
+        const scores = boards.map(b => this.minmax(b, depth, false));
         const max = Math.max(...scores);
 
         return moves[scores.indexOf(max)];
@@ -30,9 +31,9 @@ class Brain extends React.Component {
         this.componentWillReceiveProps(this.props)
     }
 
-    componentWillReceiveProps({ board, active, aiPlayer, onMove }) {
+    componentWillReceiveProps({ board, active, aiPlayer, onMove, depth }) {
         if (active !== aiPlayer) { return null }
-        onMove(this.calcMove(board, aiPlayer));
+        onMove(this.calcMove(board, aiPlayer, depth));
     }
 
     shouldComponentUpdate() { return false }

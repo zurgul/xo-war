@@ -7,8 +7,9 @@ import * as state from '../constants/cellStates';
 import Brain from './Brain';
 import { getOpponent, getScoreFunc } from '../minmax';
 
-const BOARD_SIZE = 7;
-const WIN_COUNT = 5;
+const BOARD_SIZE = 3;
+const WIN_COUNT = 3;
+const DEPTH = 3;
 
 class App extends React.Component {
     constructor(props) {
@@ -66,7 +67,7 @@ class App extends React.Component {
                     )}
                 </Board>
                 { aiPlayer
-                    ? <Brain {...{ board, active, aiPlayer }} onMove={this.recordMove} scoreFn={this.scoreFn} />
+                    ? <Brain {...{ board, active, aiPlayer, depth: DEPTH }} onMove={this.recordMove} scoreFn={this.scoreFn} />
                     : null }
             </section>
         );

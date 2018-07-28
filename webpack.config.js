@@ -23,7 +23,8 @@ module.exports = {
 	target: 'web',
 
 	devtool: 'source-map',
-
+	mode: 'development',
+	
 	entry: [
 		'babel-polyfill',
 		'./src/index'
@@ -35,7 +36,7 @@ module.exports = {
 	},
 
 	module: {
-		loaders: [
+		rules: [
 			{
 				test: /\.js$/,
 				exclude: /node_modules/,

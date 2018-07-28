@@ -1,8 +1,7 @@
-import { arrayToMatrix, getOpponent } from '../index';
+import { getOpponent } from '../index';
 import * as state from '../../constants/cellStates';
 
 const WIN = 1000;
-const enoughToWin = 900;
 
 // TODO
 // worker thread(?)
@@ -58,29 +57,27 @@ function scoreFn (winCount, sideLength) {
     const dLength = diagonals.length;
     function fn(board, player) {
         const opponent = getOpponent(player);
-
-        // const pScores = new Array(dLength);//d.map(i => ((b[i[0]] & player) + (b[i[1]] & player) + (b[i[2]] & player)) / player);
-        // const oScores = new Array(dLength);//d.map(i => ((b[i[0]] & other) + (b[i[1]] & other) + (b[i[2]] & other)) / other);
         const scores = new Array(dLength);
-        for(let di = 0; di < diagonals.length; di++) {
-            scores[di] = diagonals[di].reduce((acc, v) => {
-                acc[board[v]]++;
-                return acc;
-            }, [0, 0, 0, 0, 0]); // 1 empty, 2 player1, 4 player2
-            
-            scores[di][player] /= player; // normalization
-            scores[di][opponent] /= opponent;
-
-            if (scores[di][player] + scores[di][state.FREE] > winCount);
+        // copy board, go for the first non-free - find diagonals, mark visited cell by 2^NumOfDiag
+        // score += 1 << NumOfConnectedCells sum by every diagonal
+        const b = [...board];
+        const occupied = player + opponent;
+        const right = 1 << 7;// we move from top-left to bottom-right => only three directions: right, down, down-right
+        const down = 1 << 8;
+        const downRight = 1 << 9;
+        if (cell & occupied) {
+            if (cell & right === 0){ 
+                // go right
+            }
+            if (cell & down === 0){
+                // go down
+            }
+            if (cell & downRight === 0){
+                // go down-right
+            }
         }
 
-        // const pScores = playerScores.map((v, i) => otherScores[i] ? 0 : playerScores[i]);
-        // const oScores = playerScores.map((v, i) => playerScores[i] ? 0 : otherScores[i]);
-
-        // if (oScores.some(v => v === 3)) return -WIN;
-        // if (pScores.some(v => v === 3)) return WIN;
-
-        return pScores.reduce((acc, v, i) => acc + v - oScores[i], 0);
+        return 0;
     }
 
     fn.WIN = WIN;

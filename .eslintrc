@@ -10,9 +10,9 @@
     "codeFrame": false
   },
   "env": {
-    "es6":     true,
+    "es6": true,
     "browser": true,
-    "node":    true,
+    "node": true,
     "jest/globals": true
   },
   "extends": [
@@ -20,8 +20,32 @@
     "plugin:react/recommended"
   ],
   "rules": {
-    "quotes": ["error", "single", { "allowTemplateLiterals": true }],
-    "object-curly-spacing": [2, "always"],
-    "react/prop-types": [2, { "ignore": ["children", "className", "style"] }]
+    "quotes": [
+      "error",
+      "single",
+      {
+        "allowTemplateLiterals": true
+      }
+    ],
+    "object-curly-spacing": [
+      2,
+      "always"
+    ],
+    "react/prop-types": [
+      2,
+      {
+        "ignore": [
+          "children",
+          "className",
+          "style"
+        ]
+      }
+    ]
+  },
+  "settings": {
+    "react": {
+      "pragma": "React",
+      "version": "15.6.2"
+    }
   }
 }

@@ -20,7 +20,7 @@ export const getPossibleMoves = board => {
  * @param type - name of score function if more than one available
  * @return {function(board, player, [winCount])} score function
  */
-export const getScoreFunc = (winCount, sideLength, type = 'naive') => scoreFn[type](winCount, sideLength);
+export const getScoreFunc = (winCount, sideLength, type = 'trivial') => scoreFn[type](winCount, sideLength);
 
 export const getOpponent = player => player === state.PLAYER1 ? state.PLAYER2 : state.PLAYER1;
 
